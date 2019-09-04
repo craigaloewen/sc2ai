@@ -2,6 +2,14 @@ import os
 import json
 import csv
 
+# TODO: Fix hacky global variables
+
+generalHeaders = ['lost','mineralsCollectionRate','mineralsCurrent','supplyTotal','supplyUsed','vespeneCollectionRate','vespeneCurrent','workersActiveCount']
+unitHeaders = ['drone','zergling','queen','baneling','roach','overlord','overseer','hydralisk','spinecrawler','sporecrawler','mutalisk','corruptor','broodlord','broodling','infestor'\
+    ,'infestedterran','ultralisk','nydusworm','swarmhost','viper']
+
+headerReturnDictionary = {'generalHeaders':generalHeaders,'unitHeaders':unitHeaders}
+
 def getReplayFilesFromInput():
     fileNamesList = []
     for root, directories, filenames in os.walk('./dataOutput/ZvZ'):
@@ -42,13 +50,8 @@ def oldMain():
     print(totalToBeProcessed)
 
 def generateDataHeaders():
-    generalHeaders = ['lost','mineralsCollectionRate','mineralsCurrent','supplyTotal','supplyUsed','vespeneCollectionRate','vespeneCurrent','workersActiveCount']
-    unitHeaders = ['drone','zergling','queen','baneling','roach','overlord','overseer','hydralisk','spinecrawler','sporecrawler','mutalisk','corruptor','broodlord','broodling','infestor'\
-        ,'infestedterran','ultralisk','nydusworm','swarmhost','viper']
     
-    returnDictionary = {'generalHeaders':generalHeaders,'unitHeaders':unitHeaders}
-
-    return returnDictionary
+    return headerReturnDictionary
 
 def playerGameTickToCSVLine(gameTick, replayJSON, playerValue):
     returnCSVValues = []
@@ -109,7 +112,7 @@ def main():
         csvHeaderLine1.append(headerValue + "1")
         csvHeaderLine2.append(headerValue + "2")
 
-    csvWriter.writerow(csvHeaderLine1 + csvHeaderLine2)
+    csvWriter.writerow(["tick"] + csvHeaderLine1 + csvHeaderLine2 + ["winner"])
 
     processedCounter = 0
     totalToBeProcessed = len(fileNameList)
