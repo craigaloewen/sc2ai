@@ -1,0 +1,7 @@
+/dataInput
+/dataOutput
+/outputData.csv
+/*.pyc
+/*.csv
+/*.SC2Replay
+/.vscode
